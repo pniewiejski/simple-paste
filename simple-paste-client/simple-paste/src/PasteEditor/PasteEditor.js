@@ -6,6 +6,9 @@ import Typography from '@material-ui/core/Typography'
 import {withStyles} from '@material-ui/core/styles'
 
 import PasteForm from './PasteForm'
+import {pasteStorage, pasteStorageLocal} from './pasteStorage'
+
+const {postPaste} = pasteStorage(pasteStorageLocal)
 
 const styles = (theme) => ({
   pasteEditor: {
@@ -22,9 +25,9 @@ function PasteEditor(props) {
       <Typography variant="body1">
         It is all quite easy! Simply paste whatever you want to save in the text
         area bellow. Select how long should it persist. And then click{' '}
-        <code>Save My Paste</code>. That's it!
+        <code>Save My Paste</code>. That&apos;s it!
       </Typography>
-      <PasteForm />
+      <PasteForm postPaste={postPaste} />
     </Container>
   )
 }

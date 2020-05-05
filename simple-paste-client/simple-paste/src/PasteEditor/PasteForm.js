@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField'
 import {makeStyles} from '@material-ui/core/styles'
 
 import {Form, Formik, useField} from 'formik'
+import * as Yup from 'yup'
 
 import {PASTE_PERSISTANCE_OPTIONS} from '../constants'
 
@@ -15,9 +16,6 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 150,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
   },
   textInput: {
     marginTop: theme.spacing(2),
@@ -29,26 +27,29 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function PasteTextInput(props) {
-  const [field] = useField(props)
-
   const classes = useStyles()
+
+  const [field, meta] = useField(props)
+  const schemaError = meta.touched && meta.error
 
   return (
     <div className={classes.textInput}>
       <TextField
-        defaultValue=""
+        color="secondary"
+        error={schemaError}
         fullWidth
-        helperText="Paste's content"
         id="outlined-error-helper-text"
         multiline
         placeholder="Paste your text here"
         rows={15}
         rowsMax={80}
         variant="outlined"
-        color="secondary"
         {...field}
         {...props}
       />
+      <FormHelperText error={schemaError}>
+        {schemaError || "Paste's content"}
+      </FormHelperText>
     </div>
   )
 }
@@ -59,7 +60,8 @@ function PasteSelect(props) {
 
   const classes = useStyles()
 
-  const [field] = useField(props)
+  const [field, meta] = useField(props)
+  const schemaError = meta.touched && meta.error
 
   return (
     <>
@@ -67,10 +69,11 @@ function PasteSelect(props) {
         className={classes.formControl}
         color="secondary"
         defaultValue={PASTE_PERSISTANCE_OPTIONS[0]}
-        displayEmpty
         id="paste-persistance-select"
         onChange={onChange}
         value={pastePersistance}
+        displayEmpty
+        data-testid="test-paste-persistance-select"
         {...field}
         {...props}
       >
@@ -82,13 +85,16 @@ function PasteSelect(props) {
           )
         })}
       </Select>
-      <FormHelperText>Persistance time in minutes</FormHelperText>
+      <FormHelperText error={schemaError}>
+        {schemaError || 'Persistance time in minutes'}
+      </FormHelperText>
     </>
   )
 }
 
 export default function PasteForm(props) {
   const classes = useStyles()
+  const {postPaste} = props
 
   return (
     <>
@@ -97,12 +103,24 @@ export default function PasteForm(props) {
           pasteContent: '',
           pastePersistance: '',
         }}
-        onSubmit={(values, {setSubmitting}) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2))
-            setSubmitting(false)
-          }, 400)
+        onSubmit={async (values, {setSubmitting}) => {
+          alert(JSON.stringify(values, null, 2))
+          await postPaste(values)
+          setSubmitting(false)
         }}
+        validationSchema={Yup.object({
+          pasteContent: Yup.string()
+            .trim()
+            .min(1, 'Paste cannot be all white characters')
+            .required('Paste cannot be empty'),
+          pastePersistance: Yup.number()
+            .required('Persistance time cannot be empty')
+            .test(
+              'testOfPersistance',
+              'Persistance must be among the predefined values',
+              (item) => PASTE_PERSISTANCE_OPTIONS.includes(item),
+            ),
+        })}
       >
         <Form>
           <PasteTextInput name="pasteContent" />
