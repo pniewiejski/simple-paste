@@ -1,0 +1,1 @@
+export const PASTE_PERSISTANCE_OPTIONS = [5, 15, 30, 60]

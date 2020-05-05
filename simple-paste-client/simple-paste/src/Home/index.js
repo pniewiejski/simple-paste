@@ -3,6 +3,7 @@ import {makeStyles} from '@material-ui/core/styles'
 
 import Header from '../Header'
 import Footer from '../Footer'
+import PasteEditor from '../PasteEditor'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +18,7 @@ export default function Home() {
   return (
     <div className={classes.root}>
       <Header />
-      <p>Hello</p>
+      <PasteEditor />
       <Footer />
     </div>
   )

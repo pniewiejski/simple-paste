@@ -29,7 +29,7 @@ function Footer(props) {
 
   return (
     <footer className={classes.footer}>
-      <Container maxWidth="sm">
+      <Container maxWidth="md">
         <Typography color="inherit" variant="body1">
           Feel free to contact me.
         </Typography>
