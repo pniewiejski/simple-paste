@@ -36,7 +36,7 @@ function PasteTextInput(props) {
     <div className={classes.textInput}>
       <TextField
         color="secondary"
-        error={schemaError}
+        error={!!schemaError}
         fullWidth
         id="outlined-error-helper-text"
         multiline
@@ -47,7 +47,7 @@ function PasteTextInput(props) {
         {...field}
         {...props}
       />
-      <FormHelperText error={schemaError}>
+      <FormHelperText error={!!schemaError}>
         {schemaError || "Paste's content"}
       </FormHelperText>
     </div>
@@ -85,7 +85,7 @@ function PasteSelect(props) {
           )
         })}
       </Select>
-      <FormHelperText error={schemaError}>
+      <FormHelperText error={!!schemaError}>
         {schemaError || 'Persistance time in minutes'}
       </FormHelperText>
     </>
