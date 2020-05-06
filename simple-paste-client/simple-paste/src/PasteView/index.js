@@ -2,6 +2,8 @@ import React from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 
+import {useParams} from 'react-router-dom'
+
 import Header from '../Header'
 import Footer from '../Footer'
 import PastePreview from './PastePreview'
@@ -23,12 +25,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PasteView() {
   const classes = useStyles()
+  const {resourceId} = useParams()
 
   return (
     <div className={classes.root}>
       <Header />
       <Container className={classes.pastePreviewContainer} maxWidth="md">
-        <PastePreview getPasteById={getPasteById} resourceId="dummy" />
+        <PastePreview getPasteById={getPasteById} resourceId={resourceId} />
       </Container>
       <Footer />
     </div>

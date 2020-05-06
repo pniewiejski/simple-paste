@@ -1,21 +1,38 @@
 import React from 'react'
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom'
+
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles'
+import themeDefinition from './theme'
 
 import Home from './Home'
 import PasteView from './PasteView'
 
-import themeDefinition from './theme'
 
 const theme = createMuiTheme(themeDefinition)
 
 function App() {
   return (
-    <div className="App">
+    <Router>
       <ThemeProvider theme={theme}>
-        {/* <Home /> */}
-        <PasteView />
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/paste/:resourceId">
+            <PasteView />
+          </Route>
+          <Route path="*">
+            <Redirect to="/" />
+          </Route>
+        </Switch>
       </ThemeProvider>
-    </div>
+    </Router>
   )
 }
 

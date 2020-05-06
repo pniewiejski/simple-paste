@@ -31,7 +31,7 @@ function PasteText(props) {
 
 export default function PastePreview(props) {
   const {getPasteById, resourceId} = props
-  const [pasteData, setPasteData] = useState("")
+  const [pasteData, setPasteData] = useState('')
 
   useEffect(() => {
     const fetchPasteData = async () => {
