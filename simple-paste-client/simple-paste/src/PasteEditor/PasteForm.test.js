@@ -1,5 +1,5 @@
 import React from 'react'
-import {render, act, fireEvent, within} from '@testing-library/react'
+import {render, act, fireEvent, within, wait} from '@testing-library/react'
 import {screen} from '@testing-library/dom'
 import PasteForm from './PasteForm'
 
@@ -27,36 +27,69 @@ describe('PasteForm', () => {
       const persistanceValue = PASTE_PERSISTANCE_OPTIONS[0]
       const postPaste = jest.fn(() => Promise.resolve())
 
-      const {getByText, getByPlaceholderText, getByTestId, getByRole} = render(<PasteForm postPaste={postPaste} />)
-      const textAreaElement = getByPlaceholderText('Paste your text here')
-      const selectPersistance = getByTestId('test-paste-persistance-select')
-      const buttonElement = getByText('Save My Paste')
+      const {container} = render(<PasteForm postPaste={postPaste} />)
+      const pasteTextField = container.querySelector('textarea[name="pasteContent"]')
+      const persistanceTimeOption = container.querySelector('input[name="pastePersistance"]')
+      const submitButton = container.querySelector('button[type="submit"]')
 
       // when
-      act(() => {fireEvent.change(textAreaElement, { target: { value: pasteText }})})
-      
-      // 🙈 This piece bellow is an awefull hack to pick an option from material ui Select with native=false
-      const selectPersistanceElementInnerQueries = within(selectPersistance) // get queries to search within this piece
-      const selectPersistanceElementInnerButton = selectPersistanceElementInnerQueries.getByRole('button')
-      act(() => { fireEvent.mouseDown(selectPersistanceElementInnerButton) })
+      fireEvent.change(pasteTextField, {target: {value: pasteText}})
+      fireEvent.change(persistanceTimeOption, {target: {value: `${persistanceValue}`}})
+      fireEvent.click(submitButton)
 
-      const listbox = within(getByRole('listbox'))
-      const persistanceValueOption = listbox.getByText(`${persistanceValue}`)
-      screen.debug(persistanceValueOption)
-      act(() => { fireEvent.click(persistanceValueOption) })
-      // 🙈It's over! The dragon is gone and you can open your eyes again!
-
-      act(() => { fireEvent.click(buttonElement)} )
-      screen.debug()
-      
       // then
-      expect(postPaste).toHaveBeenCalledTimes(1)
+
+      // What I'm trying to find out here is whether a postPaste mock has been called once.
+      // This is a method responsible for posting (persiste) a new paste.
+      // I had problems with this assertion. This article helped me:
+      // https://dev.to/charlespeters/formik-react-testing-library-and-screaming-at-a-computer-for-an-hour-5h5f
+      wait(() => {
+        expect(postPaste).toHaveBeenCalledTimes(1)
+      })
     })
   })
 
-  describe('When given incorrect data', () => {
+  describe('When given an empty paste content', () => {
     it('Should not allow to post a paste', () => {
-      // TODO 😅
+      // given
+      const pasteText = ''
+      const persistanceValue = PASTE_PERSISTANCE_OPTIONS[0]
+      const postPaste = jest.fn(() => Promise.resolve())
+
+      const {container} = render(<PasteForm postPaste={postPaste} />)
+      const pasteTextField = container.querySelector('textarea[name="pasteContent"]')
+      const persistanceTimeOption = container.querySelector('input[name="pastePersistance"]')
+      const submitButton = container.querySelector('button[type="submit"]')
+      // when
+      fireEvent.change(pasteTextField, {target: {value: pasteText}})
+      fireEvent.change(persistanceTimeOption, {target: {value: `${persistanceValue}`}})
+      fireEvent.click(submitButton)
+
+      // then
+      wait(() => {
+        expect(postPaste).toHaveBeenCalledTimes(0)
+      })
+    })
+
+    it('Should prompt a form validation error', () => {
+      // given
+      const pasteText = ''
+      const persistanceValue = PASTE_PERSISTANCE_OPTIONS[0]
+      const postPaste = jest.fn(() => Promise.resolve())
+
+      const {container} = render(<PasteForm postPaste={postPaste} />)
+      const pasteTextField = container.querySelector('textarea[name="pasteContent"]')
+      const persistanceTimeOption = container.querySelector('input[name="pastePersistance"]')
+      const submitButton = container.querySelector('button[type="submit"]')
+      // when
+      fireEvent.change(pasteTextField, {target: {value: pasteText}})
+      fireEvent.change(persistanceTimeOption, {target: {value: `${persistanceValue}`}})
+      fireEvent.click(submitButton)
+
+      // then
+      wait(() => {
+        expect(getByText('Paste cannot be empty')).not.toEqual(null)
+      })
     })
   })
 })
