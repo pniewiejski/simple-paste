@@ -14,7 +14,7 @@ const styles = (theme) => ({
 })
 
 function Logo() {
-  return <Avatar alt="Logo" src="simplepaste.png" variant="square" />
+  return <Avatar alt="Logo" src="/simplepaste.png" variant="square" />
 }
 
 function Header(props) {
