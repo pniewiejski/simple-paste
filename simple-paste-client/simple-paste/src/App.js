@@ -2,6 +2,7 @@ import React from 'react'
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles'
 
 import Home from './Home'
+import PasteView from './PasteView'
 
 import themeDefinition from './theme'
 
@@ -11,7 +12,8 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <Home />
+        {/* <Home /> */}
+        <PasteView />
       </ThemeProvider>
     </div>
   )

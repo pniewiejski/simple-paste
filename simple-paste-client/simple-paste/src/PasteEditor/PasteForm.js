@@ -68,12 +68,12 @@ function PasteSelect(props) {
       <Select
         className={classes.formControl}
         color="secondary"
+        data-testid="test-paste-persistance-select"
         defaultValue={PASTE_PERSISTANCE_OPTIONS[0]}
+        displayEmpty
         id="paste-persistance-select"
         onChange={onChange}
         value={pastePersistance}
-        displayEmpty
-        data-testid="test-paste-persistance-select"
         {...field}
         {...props}
       >

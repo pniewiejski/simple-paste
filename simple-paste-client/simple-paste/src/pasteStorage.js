@@ -1,4 +1,4 @@
-export const pasteStorageLocal = {
+export const pasteStorageMock = {
   postPaste: ({pasteContent, pastePersistance}) => {
     const key = 'dummy'
     window.localStorage.setItem(
@@ -9,7 +9,13 @@ export const pasteStorageLocal = {
   },
   getPasteById: (id) => {
     const key = 'dummy'
-    const pasteItem = JSON.parse(window.localStorage.getItem(key))
+    const localStorageItem = window.localStorage.getItem(key)
+    let pasteItem = {
+      pasteContent: 'This is just a mocked paste content',
+      pastePersistance: 15,
+    }
+    if (!localStorageItem)
+      pasteItem = JSON.parse(window.localStorage.getItem(key))
     return Promise.resolve(pasteItem)
   },
 }

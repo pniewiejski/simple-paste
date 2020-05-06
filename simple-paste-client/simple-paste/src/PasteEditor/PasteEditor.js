@@ -6,9 +6,9 @@ import Typography from '@material-ui/core/Typography'
 import {withStyles} from '@material-ui/core/styles'
 
 import PasteForm from './PasteForm'
-import {pasteStorage, pasteStorageLocal} from './pasteStorage'
+import {pasteStorage, pasteStorageMock} from '../pasteStorage'
 
-const {postPaste} = pasteStorage(pasteStorageLocal)
+const {postPaste} = pasteStorage(pasteStorageMock)
 
 const styles = (theme) => ({
   pasteEditor: {

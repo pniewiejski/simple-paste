@@ -1,6 +1,5 @@
 import React from 'react'
-import {render, act, fireEvent, within, wait} from '@testing-library/react'
-import {screen} from '@testing-library/dom'
+import {render, fireEvent, wait} from '@testing-library/react'
 import PasteForm from './PasteForm'
 
 import {PASTE_PERSISTANCE_OPTIONS} from '../constants'
@@ -12,8 +11,10 @@ describe('PasteForm', () => {
     const {getByText, getByPlaceholderText, getByTestId} = render(<PasteForm />)
     const textAreaElement = getByPlaceholderText('Paste your text here')
     const buttonElement = getByText('Save My Paste')
-    const selectPersistanceElement = getByTestId('test-paste-persistance-select')
-    
+    const selectPersistanceElement = getByTestId(
+      'test-paste-persistance-select',
+    )
+
     // then
     expect(textAreaElement).not.toEqual(null)
     expect(buttonElement).not.toEqual(null)
@@ -28,13 +29,19 @@ describe('PasteForm', () => {
       const postPaste = jest.fn(() => Promise.resolve())
 
       const {container} = render(<PasteForm postPaste={postPaste} />)
-      const pasteTextField = container.querySelector('textarea[name="pasteContent"]')
-      const persistanceTimeOption = container.querySelector('input[name="pastePersistance"]')
+      const pasteTextField = container.querySelector(
+        'textarea[name="pasteContent"]',
+      )
+      const persistanceTimeOption = container.querySelector(
+        'input[name="pastePersistance"]',
+      )
       const submitButton = container.querySelector('button[type="submit"]')
 
       // when
       fireEvent.change(pasteTextField, {target: {value: pasteText}})
-      fireEvent.change(persistanceTimeOption, {target: {value: `${persistanceValue}`}})
+      fireEvent.change(persistanceTimeOption, {
+        target: {value: `${persistanceValue}`},
+      })
       fireEvent.click(submitButton)
 
       // then
@@ -57,12 +64,18 @@ describe('PasteForm', () => {
       const postPaste = jest.fn(() => Promise.resolve())
 
       const {container} = render(<PasteForm postPaste={postPaste} />)
-      const pasteTextField = container.querySelector('textarea[name="pasteContent"]')
-      const persistanceTimeOption = container.querySelector('input[name="pastePersistance"]')
+      const pasteTextField = container.querySelector(
+        'textarea[name="pasteContent"]',
+      )
+      const persistanceTimeOption = container.querySelector(
+        'input[name="pastePersistance"]',
+      )
       const submitButton = container.querySelector('button[type="submit"]')
       // when
       fireEvent.change(pasteTextField, {target: {value: pasteText}})
-      fireEvent.change(persistanceTimeOption, {target: {value: `${persistanceValue}`}})
+      fireEvent.change(persistanceTimeOption, {
+        target: {value: `${persistanceValue}`},
+      })
       fireEvent.click(submitButton)
 
       // then
@@ -77,13 +90,19 @@ describe('PasteForm', () => {
       const persistanceValue = PASTE_PERSISTANCE_OPTIONS[0]
       const postPaste = jest.fn(() => Promise.resolve())
 
-      const {container} = render(<PasteForm postPaste={postPaste} />)
-      const pasteTextField = container.querySelector('textarea[name="pasteContent"]')
-      const persistanceTimeOption = container.querySelector('input[name="pastePersistance"]')
+      const {container, getByText} = render(<PasteForm postPaste={postPaste} />)
+      const pasteTextField = container.querySelector(
+        'textarea[name="pasteContent"]',
+      )
+      const persistanceTimeOption = container.querySelector(
+        'input[name="pastePersistance"]',
+      )
       const submitButton = container.querySelector('button[type="submit"]')
       // when
       fireEvent.change(pasteTextField, {target: {value: pasteText}})
-      fireEvent.change(persistanceTimeOption, {target: {value: `${persistanceValue}`}})
+      fireEvent.change(persistanceTimeOption, {
+        target: {value: `${persistanceValue}`},
+      })
       fireEvent.click(submitButton)
 
       // then
