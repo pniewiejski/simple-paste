@@ -9,6 +9,8 @@
 <p>Oversimplified and overcomplicated app for storing and sharing bits of text.</p>
 </div>
 
+![SimplePaste Client (Unit)](https://github.com/pniewiejski/simple-paste/workflows/SimplePaste%20Client%20(Unit)/badge.svg)
+
 ## ymmm... but why?
 
 Why does this repo exist? Well, I'm glad you asked handsome stranger! To tell you the truth, since
