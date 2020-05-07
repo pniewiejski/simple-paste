@@ -1,0 +1,11 @@
+{
+  "name": "simple-paste-api",
+  "version": "0.1.0",
+  "description": "Service exposes read and write api for SimplePaste",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "Piotr Niewiejski",
+  "license": "MIT"
+}
