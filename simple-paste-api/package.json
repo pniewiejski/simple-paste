@@ -4,11 +4,14 @@
   "description": "Service exposes read and write api for SimplePaste",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npx mocha --recursive ./src/**/*.test.js"
   },
   "author": "Piotr Niewiejski",
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "mocha": "^7.1.2"
   }
 }
