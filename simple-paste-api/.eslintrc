@@ -12,10 +12,17 @@
     "no-underscore-dangle": 0,
     "no-console": 0,
     "no-param-reassign": [2, { "props": false }],
+    "comma-dangle": ["error", {
+      "arrays": "only-multiline",
+      "objects": "only-multiline",
+      "imports": "only-multiline",
+      "exports": "only-multiline",
+      "functions": "never"
+    }],
     "prettier/prettier": ["error", {
       "semi": false,
       "singleQuote": true,
-      "trailingComma": "all",
+      "trailingComma": "es5",
       "bracketSpacing": false
     }]
   },
