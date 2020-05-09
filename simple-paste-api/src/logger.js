@@ -38,6 +38,7 @@ if (process.env.NODE_ENV !== 'production') {
       format: winston.format.combine(winston.format.colorize(), myFormat),
       level: 'debug',
       handleExceptions: true,
+      silent: process.env.NODE_ENV === 'test',
     })
   )
 }
