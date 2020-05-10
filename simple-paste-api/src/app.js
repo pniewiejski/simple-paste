@@ -33,8 +33,8 @@ app.use(hasValidHeaders)
 app.use(express.json())
 
 app.get('/paste/:resourceId', (req, res) => {
-  const resourceId = req.param('resourceId')
-  logger.debug(`GET /paste/${resourceId}`)
+  const {resourceId} = req.params
+  logger.debug(`GET paste with resourceId: ${resourceId}`)
 
   res.status(httpCodes.OK).json({
     pasteContent: 'Hello this is a paste downloaded from the backend',
