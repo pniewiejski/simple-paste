@@ -5,9 +5,14 @@ const app = express()
 
 const {logger} = require('./logger')
 const {customHeaders, httpCodes} = require('./constants')
-const {HttpErrorResponse} = require('./utils')
+const {HttpErrorResponse} = require('./utils/HttpErrorResponse')
 
-const isValidRequest = (req, res, next) => {
+const {
+  createSchemaValidationMiddleware,
+} = require('./schemaValidationMiddleware')
+const {validatePasteSchema} = require('./PastePersistance/PasteSchema')
+
+const hasValidHeaders = (req, res, next) => {
   if (!req.get(customHeaders.simplePasteApplication)) {
     const httpCode = httpCodes.BAD_REQUEST
     const errorResponse = HttpErrorResponse(
@@ -24,7 +29,7 @@ const isValidRequest = (req, res, next) => {
   return next()
 }
 
-app.use(isValidRequest)
+app.use(hasValidHeaders)
 app.use(express.json())
 
 app.get('/paste/:resourceId', (req, res) => {
@@ -34,6 +39,12 @@ app.get('/paste/:resourceId', (req, res) => {
   res.status(httpCodes.OK).json({
     pasteContent: 'Hello this is a paste downloaded from the backend',
   })
+})
+
+const pasteMiddleware = createSchemaValidationMiddleware(validatePasteSchema)
+app.post('/paste', pasteMiddleware, (req, res) => {
+  logger.info(`Got POST /paste - with: ${JSON.stringify(req.body)}`)
+  res.status(201).send('lol')
 })
 
 module.exports = {
