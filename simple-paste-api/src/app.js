@@ -37,14 +37,14 @@ app.get('/paste/:resourceId', (req, res) => {
   logger.debug(`GET paste with resourceId: ${resourceId}`)
 
   res.status(httpCodes.OK).json({
-    pasteContent: 'Hello this is a paste downloaded from the backend',
+    pasteContent: 'This is a mocked paste content.\nHello world!',
   })
 })
 
 const pasteMiddleware = createSchemaValidationMiddleware(validatePasteSchema)
 app.post('/paste', pasteMiddleware, (req, res) => {
   logger.info(`Got POST /paste - with: ${JSON.stringify(req.body)}`)
-  res.status(201).send('lol')
+  res.status(httpCodes.OK_CREATED).send('Mocked response: Item saved')
 })
 
 module.exports = {
