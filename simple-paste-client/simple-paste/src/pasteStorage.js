@@ -1,5 +1,7 @@
+import {Paste} from './api'
+
 export const pasteStorageMock = {
-  postPaste: ({pasteContent, pastePersistance}) => {
+  postPaste: async ({pasteContent, pastePersistance}) => {
     const key = 'dummy'
     window.localStorage.setItem(
       key,
@@ -7,7 +9,7 @@ export const pasteStorageMock = {
     )
     return Promise.resolve()
   },
-  getPasteById: (id) => {
+  getPasteById: async (resourceId) => {
     const key = 'dummy'
     const localStorageItem = window.localStorage.getItem(key)
     let pasteItem = {
@@ -20,8 +22,13 @@ export const pasteStorageMock = {
   },
 }
 
+export const pasteStorageHttp = {
+  getPasteById: async resourceId => Paste.getById(resourceId),
+  postPaste: async ({pasteContent, pastePersistance}) => Paste.create({pasteContent, pastePersistance})
+}
+
 export const pasteStorage = ({getPasteById, postPaste}) => ({
-  getPasteById: (id) => getPasteById(id),
-  postPaste: ({pasteContent, pastePersistance}) =>
+  getPasteById: async (resourceId) => getPasteById(resourceId),
+  postPaste: async ({pasteContent, pastePersistance}) =>
     postPaste({pasteContent, pastePersistance}),
 })

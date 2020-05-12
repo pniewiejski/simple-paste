@@ -8,9 +8,9 @@ import Header from '../Header'
 import Footer from '../Footer'
 import PastePreview from './PastePreview'
 
-import {pasteStorage, pasteStorageMock} from '../pasteStorage'
+import {pasteStorage, pasteStorageMock, pasteStorageHttp} from '../pasteStorage'
 
-const {getPasteById} = pasteStorage(pasteStorageMock)
+const {getPasteById} = pasteStorage(pasteStorageHttp)
 
 const useStyles = makeStyles((theme) => ({
   root: {

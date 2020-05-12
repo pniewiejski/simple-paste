@@ -8,7 +8,7 @@ describe('PastePreview', () => {
     // given
     const mockedPasteId = 'dummy-hash'
     const mockedPasteContent = "This is a dummy paste content"
-    const getPasteById = id => Promise.resolve({
+    const getPasteById = resourceId => Promise.resolve({
       pasteContent: mockedPasteContent,
       pastePersistance: 15
     })
