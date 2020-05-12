@@ -8,7 +8,7 @@ import Header from '../Header'
 import Footer from '../Footer'
 import PastePreview from './PastePreview'
 
-import {pasteStorage, pasteStorageMock, pasteStorageHttp} from '../pasteStorage'
+import {pasteStorage, pasteStorageHttp} from '../pasteStorage'
 
 const {getPasteById} = pasteStorage(pasteStorageHttp)
 
