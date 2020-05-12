@@ -104,7 +104,6 @@ export default function PasteForm(props) {
           pastePersistance: '',
         }}
         onSubmit={async (values, {setSubmitting}) => {
-          alert(JSON.stringify(values, null, 2))
           await postPaste(values)
           setSubmitting(false)
         }}
