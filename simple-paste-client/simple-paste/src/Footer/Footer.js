@@ -2,7 +2,6 @@ import React from 'react'
 
 import Typography from '@material-ui/core/Typography'
 import Container from '@material-ui/core/Container'
-
 import {withStyles} from '@material-ui/core/styles'
 
 const styles = (theme) => ({

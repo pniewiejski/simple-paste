@@ -1,8 +1,8 @@
 import React from 'react'
+import {useParams} from 'react-router-dom'
+
 import {makeStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
-
-import {useParams} from 'react-router-dom'
 
 import Header from '../Header'
 import Footer from '../Footer'

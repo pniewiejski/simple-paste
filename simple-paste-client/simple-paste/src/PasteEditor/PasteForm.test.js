@@ -1,5 +1,6 @@
 import React from 'react'
 import {render, fireEvent, wait} from '@testing-library/react'
+
 import PasteForm from './PasteForm'
 
 import {PASTE_PERSISTANCE_OPTIONS} from '../constants'
