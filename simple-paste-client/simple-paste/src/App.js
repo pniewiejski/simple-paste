@@ -13,7 +13,6 @@ import themeDefinition from './theme'
 import Home from './Home'
 import PasteView from './PasteView'
 
-
 const theme = createMuiTheme(themeDefinition)
 
 function App() {

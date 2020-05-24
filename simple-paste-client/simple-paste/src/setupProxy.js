@@ -7,7 +7,7 @@ module.exports = (app) => {
       pathRewrite: {'^/api': ''},
       headers: {
         'X-Simple-Paste': 'dev-proxy',
-      }
-    })
+      },
+    }),
   )
 }
