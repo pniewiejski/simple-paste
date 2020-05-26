@@ -1,3 +1,5 @@
+// Development proxy for backend api calls
+
 const {createProxyMiddleware} = require('http-proxy-middleware')
 
 module.exports = (app) => {
