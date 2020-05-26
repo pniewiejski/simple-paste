@@ -24,4 +24,23 @@ describe('PastePreview', () => {
       expect(getByText(mockedPasteContent)).not.toEqual(null)
     })
   })
+
+  describe('When a paste could not be fetched from backend', () => {
+    it('Should render a toast with error an message', () => {
+      // given
+      const mockedPasteId = 'dummy-hash'
+      const expectedErrorMessage = `Could not find a paste: ${mockedPasteId}! Are you sure it exists?`
+      const getPasteById = (resourceId) => Promise.reject()
+
+      // when
+      const {getByText} = render(
+        <PastePreview getPasteById={getPasteById} resourceId={mockedPasteId} />,
+      )
+
+      // then
+      wait(() => {
+        expect(getByText(expectedErrorMessage)).not.toEqual(null)
+      })
+    })
+  })
 })
