@@ -10,6 +10,8 @@ import {makeStyles} from '@material-ui/core/styles'
 import {Form, Formik, useField} from 'formik'
 import * as Yup from 'yup'
 
+import AlertToast from '../sharedComponents/AlertToast'
+
 import {PASTE_PERSISTANCE_OPTIONS} from '../constants'
 
 const useStyles = makeStyles((theme) => ({
@@ -93,8 +95,17 @@ function PasteSelect(props) {
 }
 
 export default function PasteForm(props) {
-  const classes = useStyles()
   const {postPaste} = props
+
+  const classes = useStyles()
+
+  const handleSumbit = async (values, {setFieldError}) => {
+    try {
+      await postPaste(values)
+    } catch (error) {
+      setFieldError('general', error.message)
+    }
+  }
 
   return (
     <>
@@ -103,10 +114,7 @@ export default function PasteForm(props) {
           pasteContent: '',
           pastePersistance: '',
         }}
-        onSubmit={async (values, {setSubmitting}) => {
-          await postPaste(values)
-          setSubmitting(false)
-        }}
+        onSubmit={handleSumbit}
         validationSchema={Yup.object({
           pasteContent: Yup.string()
             .trim()
@@ -121,18 +129,25 @@ export default function PasteForm(props) {
             ),
         })}
       >
-        <Form>
-          <PasteTextInput name="pasteContent" />
-          <PasteSelect name="pastePersistance" />
-          <Button
-            className={classes.submitButton}
-            color="secondary"
-            type="submit"
-            variant="contained"
-          >
-            Save My Paste
-          </Button>
-        </Form>
+        {(formikProps) => (
+          <>
+            <Form>
+              <PasteTextInput name="pasteContent" />
+              <PasteSelect name="pastePersistance" />
+              <Button
+                className={classes.submitButton}
+                color="secondary"
+                type="submit"
+                variant="contained"
+              >
+                Save My Paste
+              </Button>
+            </Form>
+            <AlertToast active={!!formikProps.errors.general} severity="error">
+              {formikProps.errors.general}
+            </AlertToast>
+          </>
+        )}
       </Formik>
     </>
   )
