@@ -1,22 +1,14 @@
 import React, {useState, useEffect} from 'react'
 
 import TextField from '@material-ui/core/TextField'
-import {makeStyles} from '@material-ui/core/styles'
 
 import AlertToast from '../../sharedComponents/AlertToast'
 
-const useStyles = makeStyles((theme) => ({
-  pasteText: {
-    marginTop: theme.spacing(2),
-  },
-}))
-
 function PasteText(props) {
-  const classes = useStyles()
   const {textValue} = props
 
   return (
-    <div className={classes.textInput}>
+    <>
       <TextField
         color="secondary"
         fullWidth
@@ -27,7 +19,7 @@ function PasteText(props) {
         value={textValue}
         variant="outlined"
       />
-    </div>
+    </>
   )
 }
 

@@ -20,10 +20,15 @@ function PasteEditor(props) {
 
   return (
     <Container className={classes.pasteEditor} maxWidth="md">
-      <Typography variant="h4">How to save a Pase?</Typography>
+      <Typography variant="h4">
+        How to save a Paste?{' '}
+        <span aria-label="thinking face" role="img">
+          🤔
+        </span>
+      </Typography>
       <Typography variant="body1">
         It is all quite easy! Simply paste whatever you want to save in the text
-        area bellow. Select how long should it persist. And then click{' '}
+        area bellow. Select how long should it persist. Then click{' '}
         <code>Save My Paste</code>. That&apos;s it!
       </Typography>
       <PasteForm postPaste={postPaste} />
