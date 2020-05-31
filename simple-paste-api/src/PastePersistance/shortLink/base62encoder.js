@@ -6,8 +6,8 @@ const CHARSET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 const reverseString = (str) => [...str].reverse().join('')
 
-const encode = (int) => {
-  let number = int
+const encode = (integerNumber) => {
+  let number = integerNumber
   if (number === 0) {
     return CHARSET[0]
   }
