@@ -4,7 +4,8 @@
   "description": "Service exposes read and write api for SimplePaste",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test npx mocha --recursive ./src/**/*.test.js",
+    "test": "NODE_ENV=test npx mocha --recursive './src/**/*.test.js'",
+    "test-watch": "NODE_ENV=test npx mocha --recursive './src/**/*.test.js' --watch",
     "lint": "eslint './src/**/*.js' --fix",
     "lint-test": "eslint './src/**/*.js'"
   },
