@@ -99,7 +99,7 @@ export default function PasteForm(props) {
 
   const classes = useStyles()
 
-  const handleSumbit = async (values, {setFieldError}) => {
+  const handleSubmit = async (values, {setFieldError}) => {
     try {
       await postPaste(values)
     } catch (error) {
@@ -114,7 +114,7 @@ export default function PasteForm(props) {
           pasteContent: '',
           pastePersistance: '',
         }}
-        onSubmit={handleSumbit}
+        onSubmit={handleSubmit}
         validationSchema={Yup.object({
           pasteContent: Yup.string()
             .trim()
