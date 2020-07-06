@@ -1,0 +1,26 @@
+version: '3.0'
+services:
+  simple-paste-api:
+    build:
+      context: ./simple-paste-api/
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV="production"
+      - PORT=3000
+    deploy:
+      restart_policy:
+        condition: on-failure
+    ports:
+     # Exposing these ports for dev purpose
+     # TODO: remove this later
+     - 3001:3000
+
+  simple-paste:
+    build:
+      context: ./simple-paste-client/
+      dockerfile: Dockerfile
+    deploy:
+      restart_policy:
+        condition: on-failure
+    ports:
+      - 4000:80
