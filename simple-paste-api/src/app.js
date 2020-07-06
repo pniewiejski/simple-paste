@@ -44,7 +44,9 @@ app.get('/paste/:resourceId', (req, res) => {
 const pasteMiddleware = createSchemaValidationMiddleware(validatePasteSchema)
 app.post('/paste', pasteMiddleware, (req, res) => {
   logger.info(`Got POST /paste - with: ${JSON.stringify(req.body)}`)
-  res.status(httpCodes.OK_CREATED).send('Mocked response: Item saved')
+  res
+    .status(httpCodes.OK_CREATED)
+    .json({message: 'Mocked response: Item saved'})
 })
 
 module.exports = {
