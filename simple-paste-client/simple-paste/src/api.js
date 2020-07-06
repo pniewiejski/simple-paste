@@ -21,7 +21,12 @@ export const Paste = {
   create: (pasteData) =>
     requests.post('/paste', pasteData).then(async (response) => {
       const httpCode = response.status
-      const result = await response.json()
+      let result
+      try {
+        result = await response.json()
+      } catch (err) {
+        throw new Error('Error while parsing response from server')
+      }
 
       switch (httpCode) {
         case HTTP_OK_CREATED:
