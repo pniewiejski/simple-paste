@@ -1,6 +1,7 @@
 version: '3.0'
 services:
   simple-paste-api:
+    container_name: "simple-paste-api"
     build:
       context: ./simple-paste-api/
       dockerfile: Dockerfile
@@ -16,6 +17,7 @@ services:
      - 3001:3000
 
   simple-paste:
+    container_name: "simple-paste"
     build:
       context: ./simple-paste-client/
       dockerfile: Dockerfile
