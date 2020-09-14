@@ -1,13 +1,11 @@
-'use strict'
-
 const CHARSET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(
   ''
 )
 
-const reverseString = (str) => [...str].reverse().join('')
+const reverseString = (str: string): string => str.split('').reverse().join('')
 
-const encode = (integerNumber) => {
-  let number = integerNumber
+export default (integer: number): string => {
+  let number = integer
   if (number === 0) {
     return CHARSET[0]
   }
@@ -19,8 +17,4 @@ const encode = (integerNumber) => {
   }
 
   return reverseString(result)
-}
-
-module.exports = {
-  encode,
 }

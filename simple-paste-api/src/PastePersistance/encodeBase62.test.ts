@@ -1,8 +1,6 @@
-'use strict'
+import assert from 'assert'
 
-const assert = require('assert')
-
-const base62encoder = require('./base62encoder')
+import encodeBase62 from './encodeBase62'
 
 describe('base62encoder', () => {
   describe('Encode integer values', () => {
@@ -15,7 +13,7 @@ describe('base62encoder', () => {
     ]
     TEST_DATA.forEach(({inputValue, expectedResult}) => {
       it(`Should encode the value ${inputValue} to ${expectedResult}`, () => {
-        const result = base62encoder.encode(inputValue)
+        const result = encodeBase62(inputValue)
 
         assert.strictEqual(result, expectedResult)
       })

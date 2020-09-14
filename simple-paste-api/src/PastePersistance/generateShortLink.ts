@@ -1,14 +1,14 @@
-'use strict'
+import crypto, {BinaryLike} from 'crypto'
 
-const crypto = require('crypto')
-
-const base62encoder = require('./base62encoder')
+import encodeBase62 from './encodeBase62'
 
 const SHORT_LINK_LENGTH = 8
 
-const computeMD5 = (data) => crypto.createHash('md5').update(data).digest()
-const buffer2Array = (buffer) => [...buffer]
-const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max))
+const computeMD5 = (data: BinaryLike): Buffer =>
+  crypto.createHash('md5').update(data).digest()
+const buffer2Array = (buffer: Buffer): Array<number> => [...buffer]
+const getRandomInt = (max: number): number =>
+  Math.floor(Math.random() * Math.floor(max))
 
 /**
  * Generates a string of length `SHORT_LINK_LENGTH`
@@ -21,8 +21,8 @@ const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max))
  * @param {string} shortLinkSeedData - If null function will use a random integer.
  * This number can be any number or string. For instance an IP address.
  */
-const generateShortLink = async (shortLinkSeedData) => {
-  return new Promise((resolve, reject) => {
+export default async (shortLinkSeedData: string): Promise<string> => {
+  return new Promise((resolve) => {
     setImmediate(() => {
       const additionalData = shortLinkSeedData || getRandomInt(1000)
       const timestamp = Date.now().toString()
@@ -30,15 +30,12 @@ const generateShortLink = async (shortLinkSeedData) => {
 
       const hash = computeMD5(toEncode)
 
-      let shortLink = buffer2Array(hash)
-        .map((number) => base62encoder.encode(number))
+      const shortLink = buffer2Array(hash)
+        .map((number) => encodeBase62(number))
         .join('')
+        .slice(0, SHORT_LINK_LENGTH)
 
-      resolve(shortLink.slice(0, SHORT_LINK_LENGTH))
+      return resolve(shortLink)
     })
   })
-}
-
-module.exports = {
-  generateShortLink,
 }

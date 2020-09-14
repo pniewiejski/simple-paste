@@ -1,5 +1,3 @@
-'use strict'
-
 const httpCodes = {
   OK: 200,
   OK_CREATED: 201,
@@ -11,7 +9,4 @@ const customHeaders = {
   simplePasteApplication: 'X-Simple-Paste',
 }
 
-module.exports = {
-  httpCodes,
-  customHeaders,
-}
+export {httpCodes, customHeaders}

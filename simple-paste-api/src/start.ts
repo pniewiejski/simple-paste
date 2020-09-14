@@ -1,9 +1,8 @@
-'use strict'
+import {Server} from 'http'
+import logger from './logger'
+import app from './app'
 
-const {app} = require('./app')
-const {logger} = require('./logger')
-
-const gracefullyStopServer = (server) => {
+const gracefullyStopServer = (server: Server) => {
   return () => {
     logger.info('Stopping server...')
     server.close(() => {
@@ -12,7 +11,7 @@ const gracefullyStopServer = (server) => {
   }
 }
 
-const startServer = (port) => {
+export default (port: number) => {
   logger.info('Starting server...')
   const server = app.listen(port, () => {
     logger.info(`Server listening on port ${port}`)
@@ -20,8 +19,4 @@ const startServer = (port) => {
 
   process.on('SIGTERM', gracefullyStopServer(server))
   process.on('SIGINT', gracefullyStopServer(server))
-}
-
-module.exports = {
-  startServer,
 }

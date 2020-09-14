@@ -1,15 +1,9 @@
-'use strict'
+import winston from 'winston'
+import {join} from 'path'
 
-const winston = require('winston')
-const path = require('path')
+const LOGS_DIR = './logs'
 
-// TODO: Add this to config
-const logsDir = './logs'
-
-/**
- * Custom log format used in Console
- */
-const myFormat = winston.format.printf((info) => {
+const format = winston.format.printf((info) => {
   return `${info.timestamp} [${info.level}]: ${info.message}`
 })
 
@@ -21,11 +15,11 @@ const logger = winston.createLogger({
   ),
   transports: [
     new winston.transports.File({
-      filename: path.join(logsDir, 'combined.log'),
+      filename: join(LOGS_DIR, 'combined.log'),
       handleExceptions: true,
     }),
     new winston.transports.File({
-      filename: path.join(logsDir, 'error.log'),
+      filename: join(LOGS_DIR, 'error.log'),
       level: 'error',
       handleExceptions: true,
     }),
@@ -35,7 +29,7 @@ const logger = winston.createLogger({
 if (process.env.NODE_ENV !== 'production') {
   logger.add(
     new winston.transports.Console({
-      format: winston.format.combine(winston.format.colorize(), myFormat),
+      format: winston.format.combine(winston.format.colorize(), format),
       level: 'debug',
       handleExceptions: true,
       silent: process.env.NODE_ENV === 'test',
@@ -43,4 +37,4 @@ if (process.env.NODE_ENV !== 'production') {
   )
 }
 
-module.exports = {logger}
+export default logger

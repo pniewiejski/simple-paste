@@ -1,10 +1,9 @@
-'use strict'
+import assert from 'assert'
 
-const assert = require('assert')
-
-const {ALLOWED_PERSISTANCE_DURATION} = require('./constants')
-
-const {validatePasteSchema} = require('./PasteSchema')
+import {
+  ALLOWED_PERSISTANCE_DURATION,
+  PasteSchemaValidator,
+} from './PasteSchemaValidator'
 
 describe('PasteSchema', () => {
   describe('Given a valid new paste data', () => {
@@ -15,7 +14,7 @@ describe('PasteSchema', () => {
         pastePersistance: 15,
       }
       // when
-      const validationResult = await validatePasteSchema(pasteData)
+      const validationResult = await PasteSchemaValidator.validate(pasteData)
       // then
       assert.strictEqual(validationResult, true)
     })
@@ -29,7 +28,7 @@ describe('PasteSchema', () => {
         pastePersistance: 15,
       }
       // when
-      const validationResult = await validatePasteSchema(pasteData)
+      const validationResult = await PasteSchemaValidator.validate(pasteData)
       // then
       assert.strictEqual(validationResult, false)
     })
@@ -40,10 +39,10 @@ describe('PasteSchema', () => {
       assert.ok(!ALLOWED_PERSISTANCE_DURATION.includes(pastePersistance)) // Make sure that the test data ia valid :)
       const pasteData = {
         pasteContent: 'This is just a test',
-        pastePersistance: pastePersistance,
+        pastePersistance,
       }
       // when
-      const validationResult = await validatePasteSchema(pasteData)
+      const validationResult = await PasteSchemaValidator.validate(pasteData)
       // then
       assert.strictEqual(validationResult, false)
     })

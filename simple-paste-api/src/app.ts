@@ -1,18 +1,15 @@
-'use strict'
+import express from 'express'
+import logger from './logger'
+import {customHeaders, httpCodes} from './constants'
+import HttpErrorResponse from './HttpErrorResponse'
+import createSchemaValidationMiddleware from './schemaValidationMiddleware'
+import {PasteSchemaValidator} from './PastePersistance/PasteSchemaValidator'
 
-const express = require('express')
 const app = express()
 
-const {logger} = require('./logger')
-const {customHeaders, httpCodes} = require('./constants')
-const {HttpErrorResponse} = require('./utils/HttpErrorResponse')
+app.use(express.json())
 
-const {
-  createSchemaValidationMiddleware,
-} = require('./schemaValidationMiddleware')
-const {validatePasteSchema} = require('./PastePersistance/PasteSchema')
-
-const hasValidHeaders = (req, res, next) => {
+app.use((req, res, next) => {
   if (!req.get(customHeaders.simplePasteApplication)) {
     const httpCode = httpCodes.BAD_REQUEST
     const errorResponse = HttpErrorResponse(
@@ -20,20 +17,19 @@ const hasValidHeaders = (req, res, next) => {
       'Invalid Request! Missing headers!'
     )
     logger.info(
-      `Bad request ${req.path}; Missing header: ${customHeaders.simplePasteApplication}`
+      `Bad request ${(req as any).path}; Missing header: ${
+        customHeaders.simplePasteApplication
+      }`
     )
 
     return res.status(httpCode).json(errorResponse)
   }
 
   return next()
-}
-
-app.use(hasValidHeaders)
-app.use(express.json())
+})
 
 app.get('/paste/:resourceId', (req, res) => {
-  const {resourceId} = req.params
+  const {resourceId} = req.params // TODO: what if resourceID does not exist?
   logger.debug(`GET paste with resourceId: ${resourceId}`)
 
   res.status(httpCodes.OK).json({
@@ -41,7 +37,7 @@ app.get('/paste/:resourceId', (req, res) => {
   })
 })
 
-const pasteMiddleware = createSchemaValidationMiddleware(validatePasteSchema)
+const pasteMiddleware = createSchemaValidationMiddleware(PasteSchemaValidator)
 app.post('/paste', pasteMiddleware, (req, res) => {
   logger.info(`Got POST /paste - with: ${JSON.stringify(req.body)}`)
   res
@@ -49,6 +45,4 @@ app.post('/paste', pasteMiddleware, (req, res) => {
     .json({message: 'Mocked response: Item saved'})
 })
 
-module.exports = {
-  app,
-}
+export default app
