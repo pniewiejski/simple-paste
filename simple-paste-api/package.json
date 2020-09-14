@@ -4,6 +4,7 @@
   "description": "Service exposes read and write api for SimplePaste",
   "main": "index.js",
   "scripts": {
+    "start": "./build/index.js",
     "test": "jest --verbose",
     "build": "tsc",
     "start-dev": "ts-node index.ts",
