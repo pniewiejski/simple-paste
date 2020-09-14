@@ -11,11 +11,14 @@
     "prettier"
   ],
   "rules": {
+    "semi": "off",
+    "@typescript-eslint/semi": ["off"],
     "no-use-before-define": [2, { "functions": false }],
     "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": true }],
     "no-underscore-dangle": 0,
     "no-console": 0,
     "no-param-reassign": [2, { "props": false }],
+    "prefer-default-export": "off",
     "comma-dangle": ["error", {
       "arrays": "only-multiline",
       "objects": "only-multiline",
