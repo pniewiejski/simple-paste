@@ -1,8 +1,9 @@
-'use strict'
-
 import assert from 'assert'
 
-import  {ALLOWED_PERSISTANCE_DURATION, PasteSchemaValidator} from './PasteSchemaValidator'
+import {
+  ALLOWED_PERSISTANCE_DURATION,
+  PasteSchemaValidator,
+} from './PasteSchemaValidator'
 
 describe('PasteSchema', () => {
   describe('Given a valid new paste data', () => {
@@ -38,7 +39,7 @@ describe('PasteSchema', () => {
       assert.ok(!ALLOWED_PERSISTANCE_DURATION.includes(pastePersistance)) // Make sure that the test data ia valid :)
       const pasteData = {
         pasteContent: 'This is just a test',
-        pastePersistance: pastePersistance,
+        pastePersistance,
       }
       // when
       const validationResult = await PasteSchemaValidator.validate(pasteData)
