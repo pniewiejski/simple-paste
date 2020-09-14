@@ -3,7 +3,7 @@ import Joi from '@hapi/joi'
 import logger from '../logger'
 import {SchemaValidator} from '../SchemaValidator'
 
-const ALLOWED_PERSISTANCE_DURATION = [5, 15, 30, 60]
+export const ALLOWED_PERSISTANCE_DURATION = [5, 15, 30, 60]
 
 const schema = Joi.object({
   pasteContent: Joi.string().required().min(1),
@@ -25,8 +25,6 @@ const validate = async (data: object) => {
   return true
 }
 
-const PasteSchemaValidator: SchemaValidator = {
+export const PasteSchemaValidator: SchemaValidator = {
   validate,
 }
-
-export default PasteSchemaValidator
