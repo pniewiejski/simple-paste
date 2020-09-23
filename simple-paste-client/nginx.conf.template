@@ -5,7 +5,7 @@ upstream simple-paste-api {
   # before nginx is started.
   #   > Out-of-the-box, nginx doesn't support environment variables
   #   > inside most configuration blocks.
-  server simple-paste-api:${API_PROXY_PORT};
+  server ${API_PROXY_NAME}:${API_PROXY_PORT};
 }
 
 server {
