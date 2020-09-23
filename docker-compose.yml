@@ -14,7 +14,7 @@ services:
     ports:
      # Exposing these ports for dev purpose
      # TODO: remove this later
-     - 3001:3000
+     - 3000:3000
 
   simple-paste:
     container_name: "simple-paste"
