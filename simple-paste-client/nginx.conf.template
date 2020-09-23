@@ -1,12 +1,16 @@
 limit_req_zone $binary_remote_addr zone=basiclimit:10m rate=10r/s;
 
 upstream simple-paste-api {
-  server simple-paste-api:3000;
+  # PORT env has to be substituted with envsubst
+  # before nginx is started.
+  #   > Out-of-the-box, nginx doesn't support environment variables
+  #   > inside most configuration blocks.
+  server simple-paste-api:${API_PROXY_PORT};
 }
 
 server {
   listen 80 default_server;
-  server_name simple-paste.com www.simple-paste.com
+  server_name simple-paste.com www.simple-paste.com;
 
   location / {
     limit_req zone=basiclimit burst=5 nodelay;
