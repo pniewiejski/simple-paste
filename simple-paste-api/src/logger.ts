@@ -23,18 +23,13 @@ const logger = winston.createLogger({
       level: 'error',
       handleExceptions: true,
     }),
-  ],
-})
-
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(
     new winston.transports.Console({
       format: winston.format.combine(winston.format.colorize(), format),
       level: 'debug',
       handleExceptions: true,
       silent: process.env.NODE_ENV === 'test',
-    })
-  )
-}
+    }),
+  ],
+})
 
 export default logger
