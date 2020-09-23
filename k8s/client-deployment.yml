@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-paste-client
+  labels:
+    app: simple-paste-client-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: simple-paste-client
+  template:
+    metadata:
+      name: simple-paste-client
+      labels:
+        app: simple-paste-client
+    spec:
+      containers:
+      - name: simple-paste-client
+        image: simple-paste/client:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+        env:
+          - name: API_PROXY_PORT
+            value: "3000"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        
+        

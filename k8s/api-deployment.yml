@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-paste-api
+  labels:
+    app: simple-paste-api-deployment
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: simple-paste-api
+  
+  template:
+    metadata:
+      labels:
+        app: simple-paste-api
+    spec:
+      containers:
+      - name: simple-paste-api
+        image: simple-paste/api:latest
+        imagePullPolicy: Never # Make sure we're using the local image
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
+        env:
+          - name: NODE_ENV
+            value: production
+          - name: PORT
+            value: "3000"
+        ports:
+        - containerPort: 3000
