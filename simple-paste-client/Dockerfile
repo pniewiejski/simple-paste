@@ -14,6 +14,13 @@ CMD ["/bin/bash"]
 FROM nginx:stable-alpine
 COPY --from=build /app/build /usr/share/nginx/html
 
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+# Read https://hub.docker.com/_/nginx for more information about
+# environment variable substitution in docker image.
+#   > Out-of-the-box, nginx doesn't support environment
+#   > variables inside most configuration blocks.
+# 
+# https://github.com/nginxinc/docker-nginx/blob/master/stable/alpine/20-envsubst-on-templates.sh
+# uses templates to create correct config files before nginx itself is started
+COPY ./nginx.conf.template /etc/nginx/templates/default.conf.template
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

@@ -21,6 +21,8 @@ services:
     build:
       context: ./simple-paste-client/
       dockerfile: Dockerfile
+    environment:
+      - API_PROXY_PORT=3000
     deploy:
       restart_policy:
         condition: on-failure
