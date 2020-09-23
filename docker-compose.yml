@@ -23,6 +23,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - API_PROXY_PORT=3000
+      - API_PROXY_NAME=simple-paste-api
     deploy:
       restart_policy:
         condition: on-failure
